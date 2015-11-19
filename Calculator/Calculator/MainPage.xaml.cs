@@ -23,6 +23,7 @@ namespace Calculator
         public double? Double;
         public string String = string.Empty;
         public string Char;
+        public int dataEntry;
 
         public void AddCharacter(char ch)
         {
