@@ -537,7 +537,8 @@
                 <Button x:Name="EndingBracket" Content=")" HorizontalAlignment="Left" Height="48" Margin="10,5,0,0" VerticalAlignment="Top" Width="70" Grid.Column="1" FontSize="16" Style="{StaticResource BracketButton}" Click="EndingBracket_Click"/>
                 <Button x:Name="StartingBracket" Content="(" HorizontalAlignment="Left" Height="48" Margin="10,5,0,0" VerticalAlignment="Top" Width="70" FontSize="16" Style="{StaticResource BracketButton}" Click="StartingBracket_Click"/>
             </Grid>
-            <TextBlock x:Name="DisplayTopText" HorizontalAlignment="Left" Margin="10,10,0,0" Text="TextBlock" VerticalAlignment="Top" Height="36" Width="340" FontSize="32" FontFamily="Courier New" TextWrapping="Wrap"/>
+            <TextBlock x:Name="DisplayTopText" HorizontalAlignment="Left" Margin="10,10,0,0" Text="DisplayTopText" VerticalAlignment="Top" Height="36" Width="340" FontSize="32" FontFamily="Courier New" TextWrapping="Wrap"/>
+            <TextBlock x:Name="DisplayTopText_Copy" HorizontalAlignment="Left" Margin="10,167,0,0" Text="DisplayBottomText" VerticalAlignment="Top" Height="36" Width="340" FontSize="32" FontFamily="Courier New" TextWrapping="Wrap"/>
         </Grid>
 
     </Grid>

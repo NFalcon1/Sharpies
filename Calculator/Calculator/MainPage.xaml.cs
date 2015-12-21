@@ -17,297 +17,214 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Calculator
 {
-    class NumOrString
-    {
-        public int? Int;
-        public double? Double;
-        public string String = string.Empty;
-        public string Char;
-        public int dataEntry;
-
-        public void AddCharacter(char ch)
-        {
-            if (ch == '.')
-            {
-                if (this.Double.HasValue)
-                {
-                    throw new Exception("Can't add multiple decimals");
-                }
-
-                if (this.Int.HasValue)
-                {
-                    this.Double = this.Int.Value;
-                    this.Int = null;
-                }
-                else
-                {
-                    this.Double = 0.0;
-                }
-
-                this.String += ".";
-            }
-            else if (ch >= '0' && ch <= '9')
-            {
-                this.String += ch;
-                if (this.Int.HasValue)
-                {
-                    this.Int = this.Int.Value * 10 + (ch - '0');
-                }
-                else
-                {
-                    this.Double = double.Parse(this.String);
-                }
-            }
-        }
-    }
-
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class MainPage : Page
     {
-        int numOfBrackets = 0;
-        int endingBracket = 0;
-        int itemNumberCheck = 0;
         int shift = 0;
-        int item = 0;
-
-        List<NumOrString> bracketSolver = new List<NumOrString>();
-        List<string> dataSolver = new List<string>();
-        List<string> complexList = new List<string>
-        (
-            new string[]
-            {
-                "tan ",
-                "atan ",
-                "sin ",
-                "asin ",
-                "cos ",
-                "acos ",
-                "log ",
-                "10^ ",
-                "ln",
-                "e^ ",
-                "^",
-                "√"
-
-            }
-        );
-        List<string> simpleList = new List<string>
-        (
-            new string[]
-            {
-                "+",
-                "-",
-                "*",
-                "÷"
-            }
-        );
-        List<string> numberList = new List<string>
-        (
-            new string[]
-            {
-                ".",
-                "0",
-                "1",
-                "2",
-                "3",
-                "4",
-                "5",
-                "6",
-                "7",
-                "8",
-                "9"
-            }
-        );
-
 
         public MainPage()
         {
             this.InitializeComponent();
-            this.DisplayTopText.Text = string.Empty;
-            int numOfBrackets = 0;
-            int endingBracket = 0;
-            int itemNumberCheck = 0;
-            int shift = 0;
-            int item = 1;
-            List<NumOrString> bracketSolver = new List<NumOrString>();
+            this.DisplayTopText.Text = "";
+            this.DisplayTopText_Copy.Text = "0";
         }
 
         private void Decimal_Click(object sender, RoutedEventArgs e)
         {
             this.DisplayTopText.Text += ".";
-            dataSolver[item] += '.';
-            if (dataSolver.Count != item + 1)
-            {
-                dataSolver.Add(null);
-            }
         }
 
         private void Zero_Click(object sender, RoutedEventArgs e)
         {
             this.DisplayTopText.Text += "0";
-            dataSolver[item] += '0';
-
-            if (dataSolver.Count != item + 1)
-            {
-                dataSolver.Add(null);
-            }
+            double answer = Solver.Solve(this.DisplayTopText.Text);
+            this.DisplayTopText_Copy.Text = answer.ToString();
         }
 
         private void One_Click(object sender, RoutedEventArgs e)
         {
             this.DisplayTopText.Text += "1";
-            dataSolver[item] += '1';
-            if (dataSolver.Count != item + 1)
-            {
-                dataSolver.Add(null);
-            }
+            double answer = Solver.Solve(this.DisplayTopText.Text);
+            this.DisplayTopText_Copy.Text = answer.ToString();
         }
 
         private void Two_Click(object sender, RoutedEventArgs e)
         {
             this.DisplayTopText.Text += "2";
-            dataSolver[item] += '2';
-            if (dataSolver.Count != item + 1)
-            {
-                dataSolver.Add(null);
-            }
+            double answer = Solver.Solve(this.DisplayTopText.Text);
+            this.DisplayTopText_Copy.Text = answer.ToString();
         }
 
         private void Three_Click(object sender, RoutedEventArgs e)
         {
             this.DisplayTopText.Text += "3";
-            dataSolver[item] += '3';
-            if (dataSolver.Count != item + 1)
-            {
-                dataSolver.Add(null);
-            }
+            double answer = Solver.Solve(this.DisplayTopText.Text);
+            this.DisplayTopText_Copy.Text = answer.ToString();
         }
 
         private void Four_Click(object sender, RoutedEventArgs e)
         {
             this.DisplayTopText.Text += "4";
-            dataSolver[item] += '4';
-            if (dataSolver.Count != item + 1)
-            {
-                dataSolver.Add(null);
-            }
+            double answer = Solver.Solve(this.DisplayTopText.Text);
+            this.DisplayTopText_Copy.Text = answer.ToString();
         }
 
         private void Five_Click(object sender, RoutedEventArgs e)
         {
             this.DisplayTopText.Text += "5";
-            dataSolver[item] += '5';
-            if (dataSolver.Count != item + 1)
-            {
-                dataSolver.Add(null);
-            }
+            double answer = Solver.Solve(this.DisplayTopText.Text);
+            this.DisplayTopText_Copy.Text = answer.ToString();
         }
 
         private void Six_Click(object sender, RoutedEventArgs e)
         {
             this.DisplayTopText.Text += "6";
-            dataSolver[item] += '6';
-            if (dataSolver.Count != item + 1)
-            {
-                dataSolver.Add(null);
-            }
+            double answer = Solver.Solve(this.DisplayTopText.Text);
+            this.DisplayTopText_Copy.Text = answer.ToString();
         }
 
         private void Seven_Click(object sender, RoutedEventArgs e)
         {
             this.DisplayTopText.Text += "7";
-            dataSolver[item] += '7';
-            if (dataSolver.Count != item + 1)
-            {
-                dataSolver.Add(null);
-            }
+            double answer = Solver.Solve(this.DisplayTopText.Text);
+            this.DisplayTopText_Copy.Text = answer.ToString();
         }
 
         private void Eight_Click(object sender, RoutedEventArgs e)
         {
             this.DisplayTopText.Text += "8";
-            dataSolver[item] += '8';
-            if (dataSolver.Count != item + 1)
-            {
-                dataSolver.Add(null);
-            }
+            double answer = Solver.Solve(this.DisplayTopText.Text);
+            this.DisplayTopText_Copy.Text = answer.ToString();
         }
 
         private void Nine_Click(object sender, RoutedEventArgs e)
         {
             this.DisplayTopText.Text += "9";
-            dataSolver[item] += '9';
-            if (dataSolver.Count != item + 1)
-            {
-                dataSolver.Add(null);
-            }
+            double answer = Solver.Solve(this.DisplayTopText.Text);
+            this.DisplayTopText_Copy.Text = answer.ToString();
         }
 
         private void Answer_Click(object sender, RoutedEventArgs e)
         {
-            //this.DisplayTopText.Text += ".";
+            this.DisplayTopText.Text += this.DisplayTopText_Copy;
+            double answer = Solver.Solve(this.DisplayTopText.Text);
+            this.DisplayTopText_Copy.Text = answer.ToString();
         }
 
         private void Plus_Click(object sender, RoutedEventArgs e)
         {
             this.DisplayTopText.Text += "+";
-
-            if (endingBracket == 2)
-            {
-                dataSolver[dataSolver.Count - 1] = ")";
-            }
+            double answer = Solver.Solve(this.DisplayTopText.Text);
+            this.DisplayTopText_Copy.Text = answer.ToString();
         }
 
         private void Minus_Click(object sender, RoutedEventArgs e)
         {
             this.DisplayTopText.Text += "-";
+            double answer = Solver.Solve(this.DisplayTopText.Text);
+            this.DisplayTopText_Copy.Text = answer.ToString();
         }
 
         private void Times_Click(object sender, RoutedEventArgs e)
         {
             this.DisplayTopText.Text += "·";
+            double answer = Solver.Solve(this.DisplayTopText.Text);
+            this.DisplayTopText_Copy.Text = answer.ToString();
         }
 
         private void Divide_Click(object sender, RoutedEventArgs e)
         {
             this.DisplayTopText.Text += "÷";
+            double answer = Solver.Solve(this.DisplayTopText.Text);
+            this.DisplayTopText_Copy.Text = answer.ToString();
         }
 
         private void Cos_Click(object sender, RoutedEventArgs e)
         {
-            this.DisplayTopText.Text += "cos ";
+            if (shift == 1)
+            {
+                this.DisplayTopText.Text += "acos ";
+                shift = 0;
+            }
+            else
+            {
+                this.DisplayTopText.Text += "cos ";
+            }
+            double answer = Solver.Solve(this.DisplayTopText.Text);
+            this.DisplayTopText_Copy.Text = answer.ToString();
         }
 
         private void Sin_Click(object sender, RoutedEventArgs e)
         {
-            this.DisplayTopText.Text += "sin ";
+            if (shift == 1)
+            {
+                this.DisplayTopText.Text += "asin ";
+                shift = 0;
+            }
+            else
+            {
+                this.DisplayTopText.Text += "sin ";
+            }
+            double answer = Solver.Solve(this.DisplayTopText.Text);
+            this.DisplayTopText_Copy.Text = answer.ToString();
         }
 
         private void Tan_Click(object sender, RoutedEventArgs e)
         {
-            this.DisplayTopText.Text += "tan ";
+            if (shift == 1)
+            {
+                this.DisplayTopText.Text += "atan ";
+                shift = 0;
+            }
+            else
+            {
+                this.DisplayTopText.Text += "tan ";
+            }
+            double answer = Solver.Solve(this.DisplayTopText.Text);
+            this.DisplayTopText_Copy.Text = answer.ToString();
         }
 
         private void ln_Click(object sender, RoutedEventArgs e)
         {
-            this.DisplayTopText.Text += "ln ";
+            if (shift == 1)
+            {
+                this.DisplayTopText.Text += "aln ";
+                shift = 0;
+            }
+            else
+            {
+                this.DisplayTopText.Text += "ln ";
+            }
+            double answer = Solver.Solve(this.DisplayTopText.Text);
+            this.DisplayTopText_Copy.Text = answer.ToString();
         }
 
         private void log_Click(object sender, RoutedEventArgs e)
         {
-            this.DisplayTopText.Text += "log ";
+            if (shift == 1)
+            {
+                this.DisplayTopText.Text += "alog ";
+                shift = 0;
+            }
+            else
+            {
+                this.DisplayTopText.Text += "log ";
+            }
+            double answer = Solver.Solve(this.DisplayTopText.Text);
+            this.DisplayTopText_Copy.Text = answer.ToString();
         }
 
         private void SquareRoot_Click(object sender, RoutedEventArgs e)
         {
             this.DisplayTopText.Text += "√";
+            double answer = Solver.Solve(this.DisplayTopText.Text);
+            this.DisplayTopText_Copy.Text = answer.ToString();
         }
 
         private void Exponents_Click(object sender, RoutedEventArgs e)
         {
             this.DisplayTopText.Text += "^";
+            double answer = Solver.Solve(this.DisplayTopText.Text);
+            this.DisplayTopText_Copy.Text = answer.ToString();
         }
 
         private void Shift_Click(object sender, RoutedEventArgs e)
@@ -318,32 +235,28 @@ namespace Calculator
         private void AllClear_Click(object sender, RoutedEventArgs e)
         {
             this.InitializeComponent();
-            this.DisplayTopText.Text = string.Empty;
-            int numOfBrackets = 0;
-            int endingBracket = 0;
-            int itemNumberCheck = 0;
-            int shift = 0;
-            int item = 1;
-            List<NumOrString> bracketSolver = new List<NumOrString>();
-            List<NumOrString> dataSolver = new List<NumOrString>()
-            {
-                new NumOrString {String = String.Empty }
-            };
+            this.DisplayTopText.Text = "";
         }
 
         private void StartingBracket_Click(object sender, RoutedEventArgs e)
         {
             this.DisplayTopText.Text += "(";
+            double answer = Solver.Solve(this.DisplayTopText.Text);
+            this.DisplayTopText_Copy.Text = answer.ToString();
         }
 
         private void EndingBracket_Click(object sender, RoutedEventArgs e)
         {
             this.DisplayTopText.Text += ")";
+            double answer = Solver.Solve(this.DisplayTopText.Text);
+            this.DisplayTopText_Copy.Text = answer.ToString();
         }
 
         private void Solve_Click(object sender, RoutedEventArgs e)
         {
-
+            double answer = Solver.Solve(this.DisplayTopText.Text);
+            this.DisplayTopText_Copy.Text = answer.ToString();
+            this.DisplayTopText.Text = "";
         }
     }
 }
