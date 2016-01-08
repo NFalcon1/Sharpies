@@ -45,10 +45,10 @@ namespace Graphing_Calculator_UI
 
         private void Graph_Click(object sender, RoutedEventArgs e)
         {
-            double xMin = -10.0;
-            double xMax = 10.0;
+            double xMin = -100.0;
+            double xMax = 100.0;
 
-            GraphWindow graphWindow = new GraphWindow(xMin, xMax);
+            GraphWindow graphWindow = new GraphWindow(xMin, xMax, this.FunctionBox.Text);
             graphWindow.ShowDialog();
         }
 

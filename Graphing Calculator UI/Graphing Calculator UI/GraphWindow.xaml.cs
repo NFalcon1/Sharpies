@@ -24,6 +24,7 @@ namespace Graphing_Calculator_UI
         private double xMax;
         private double yMin;
         private double yMax;
+        private string funcText;
 
         const double Zoom = 5;
 
@@ -54,12 +55,13 @@ namespace Graphing_Calculator_UI
             get { return (this.xMax - this.xMin) / this.NumberOfPoints; }
         }
 
-        public GraphWindow(double xMin, double xMax)
+        public GraphWindow(double xMin, double xMax, string funcText)
         {
             this.xMin = xMin;
             this.xMax = xMax;
             this.yMin = -(xMax - xMin)/2;
             this.yMax = (xMax - xMin)/2;
+            this.funcText = funcText;
 
             InitializeComponent();
         }
@@ -96,9 +98,7 @@ namespace Graphing_Calculator_UI
 
             for (int i = 0; i < this.NumberOfPoints; i++)
             {
-                // uncoment once GraphTools.CalcFromString is ready 
-                // y[i] = GraphTools.CalcFromString(this.FunctionBox.Text, xMin + xDelta * i);
-                dy = GraphTools.Calc(this.xMin + this.Delta * i);
+                dy = GraphTools.CalcFromString(this.funcText, this.xMin + this.Delta * i);
                 y[i] = GraphTools.CalcCoord(this.yMin, this.yMax, dy, height);
             }
 

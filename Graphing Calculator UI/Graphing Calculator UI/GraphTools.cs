@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using Calculator;
 
 // draw graph
 
@@ -19,7 +20,12 @@ namespace Graphing_Calculator_UI
         /// </summary>
         static public double CalcFromString(string y, double x)
         {
-            throw new NotImplementedException("Guys implement me!");
+            double result;
+            y = y.ToLower();
+            y = y.Replace("x", String.Format("{0:0.##}", x));
+            y = y.Replace("*", "·");
+            result = Solver.Solve(y);
+            return result;
         }
 
         static public double Calc(double x)
