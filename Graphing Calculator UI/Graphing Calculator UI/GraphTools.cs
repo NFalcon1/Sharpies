@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using Calculator;
+using System.Windows;
 
 // draw graph
 
@@ -48,15 +49,46 @@ namespace Graphing_Calculator_UI
             return 100;
         }
 
-        static public void AddLine(Canvas canvas, double x1, double y1, double x2, double y2)
+        static public void AddPolyLine(Canvas canvas, Point[] points)
+        {
+            // Create a red Brush
+            SolidColorBrush redBrush = new SolidColorBrush();
+            redBrush.Color = Colors.Red;
+
+            PointCollection collection = new PointCollection(points);
+            Polyline polyLine = new Polyline();
+            polyLine.StrokeThickness = 1;
+            polyLine.Stroke = redBrush;
+            polyLine.Points = collection;
+            canvas.Children.Add(polyLine);
+        }
+
+        static public void AddPoint(Canvas canvas, Point p1)
+        {
+            Ellipse myEllipse = new Ellipse();
+            SolidColorBrush mySolidColorBrush = new SolidColorBrush();
+            mySolidColorBrush.Color = Colors.Red;
+            myEllipse.Fill = mySolidColorBrush;
+            myEllipse.StrokeThickness = 2;
+            myEllipse.Stroke = Brushes.Red;
+            myEllipse.Width = 3;
+            myEllipse.Height = 3;
+            Canvas.SetTop(myEllipse, p1.Y);
+            Canvas.SetLeft(myEllipse, p1.X);
+            canvas.Children.Add(myEllipse);
+            // Add line to the Grid.
+            // canvas.Children.Add(line);
+        }
+
+        static public void AddLine(Canvas canvas, Point p1, Point p2)
         {
             // Create a Line
             Line line = new Line();
 
-            line.X1 = x1;
-            line.Y1 = y1;
-            line.X2 = x2;
-            line.Y2 = y2;
+            line.X1 = p1.X;
+            line.Y1 = p1.Y;
+            line.X2 = p2.X;
+            line.Y2 = p2.Y;
 
             // Create a red Brush
             SolidColorBrush redBrush = new SolidColorBrush();

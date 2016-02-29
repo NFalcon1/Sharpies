@@ -17,7 +17,7 @@
         </Grid.RowDefinitions>
         <Button x:Name="Graph" Content="Graph" HorizontalAlignment="Left" Margin="118.483,3,0,0" VerticalAlignment="Top" Width="75" Height="30" Grid.Row="1" Grid.Column="1"/>
         <Button x:Name="MyButton" Content="Cancel" HorizontalAlignment="Left" Margin="118.483,44,0,0" VerticalAlignment="Top" Width="75" Height="30" Grid.Row="1" Grid.Column="1"/>
-        <Label x:Name="label3" Content="Y = " HorizontalAlignment="Left" Margin="17,52,0,0" Grid.Row="1" VerticalAlignment="Top" Width="76"/>
+        <Label x:Name="label3" Content="y = " HorizontalAlignment="Left" Margin="17,52,0,0" Grid.Row="1" VerticalAlignment="Top" Width="76"/>
         <TextBox x:Name="FunctionBox" HorizontalAlignment="Left" Height="23" Margin="103,55,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
 
     </Grid>

@@ -70,11 +70,12 @@ namespace Calculator
 
     class Solver
     {
-        const string binaryExpr = "^·÷%+-";
+        const string binaryExpr = "^·*÷%+-";
 
         static Func<double, double, double>[] binaryOperators = new Func<double, double, double>[]
         {
             (l,r) => Math.Pow(l, r),
+            (l,r) => l * r,
             (l,r) => l * r,
             (l,r) => l / r,
             (l,r) => l % r,
@@ -122,7 +123,8 @@ namespace Calculator
             return -1;
         }
 
-        static string FixExpr(string expr)
+        static string FixExpr(
+            string expr)
         {
             StringBuilder sb = new StringBuilder();
             for (int check = 0; check < expr.Length - 1; check++)
@@ -143,16 +145,19 @@ namespace Calculator
             return sb.ToString();
         }
 
-        static Node Parse(string expr)
+        public static Node Parse(
+            string expr,
+            Dictionary<string, VariableNode> variables)
         {
             string fixedExpr = FixExpr(expr);
-            return Parse(fixedExpr, 0, fixedExpr.Length);
+            return Parse(fixedExpr, 0, fixedExpr.Length, variables);
         }
 
         static Node Parse(
             string expr,
             int startIdx,
-            int endIdx)
+            int endIdx,
+            Dictionary<string, VariableNode> variables)
         {
             if (startIdx == endIdx)
             { return new ConstNode(0); }
@@ -166,8 +171,8 @@ namespace Calculator
                 {
                     return new BinaryNode(
                         binaryOperators[iE],
-                        Parse(expr, startIdx, idx),
-                        Parse(expr, idx + 1, endIdx));
+                        Parse(expr, startIdx, idx, variables),
+                        Parse(expr, idx + 1, endIdx, variables));
                 }
             }
 
@@ -177,7 +182,7 @@ namespace Calculator
                 {
                     return new UnaryNode(
                         kvPair.Value,
-                        Parse(expr, startIdx + kvPair.Key.Length, endIdx));
+                        Parse(expr, startIdx + kvPair.Key.Length, endIdx, variables));
                 }
             }
 
@@ -195,7 +200,7 @@ namespace Calculator
                     { return new ConstNode(0); }
                 }
 
-                return Parse(expr, startIdx + 1, expr[endIdx - 1] == ')' ? endIdx - 1 : endIdx);
+                return Parse(expr, startIdx + 1, expr[endIdx - 1] == ')' ? endIdx - 1 : endIdx, variables);
             }
 
             double rv = 0;
@@ -206,6 +211,9 @@ namespace Calculator
             { return new ConstNode(Math.PI); }
             else if (subStr == "E")
             { return new ConstNode(Math.E); }
+            else if (variables.ContainsKey(subStr))
+            { return variables[subStr]; }
+
             return new ConstNode(0);
         }
 
@@ -225,7 +233,7 @@ namespace Calculator
 
         public static double Solve(string str)
         {
-            double res = Parse(str).Value;
+            double res = Parse(str, new Dictionary<string, VariableNode>()).Value;
             return res;
         }
     }
