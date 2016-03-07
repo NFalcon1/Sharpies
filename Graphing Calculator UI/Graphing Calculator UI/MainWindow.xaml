@@ -5,20 +5,29 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Graphing_Calculator_UI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid Margin="0,0,-8,-8">
+        Title="MainWindow" Height="350" Width="525" KeyUp="Window_KeyDown">
+    <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="314*"/>
-            <ColumnDefinition Width="203*"/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="4*"/>
             <RowDefinition Height="315*"/>
         </Grid.RowDefinitions>
-        <Button x:Name="Graph" Content="Graph" HorizontalAlignment="Left" Margin="118.483,3,0,0" VerticalAlignment="Top" Width="75" Height="30" Grid.Row="1" Grid.Column="1"/>
-        <Button x:Name="MyButton" Content="Cancel" HorizontalAlignment="Left" Margin="118.483,44,0,0" VerticalAlignment="Top" Width="75" Height="30" Grid.Row="1" Grid.Column="1"/>
-        <Label x:Name="label3" Content="y = " HorizontalAlignment="Left" Margin="17,52,0,0" Grid.Row="1" VerticalAlignment="Top" Width="76"/>
-        <TextBox x:Name="FunctionBox" HorizontalAlignment="Left" Height="23" Margin="103,55,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Label x:Name="label3" Content="y = " HorizontalAlignment="Left" Margin="5,5,0,0" Grid.Row="1" VerticalAlignment="Top" Width="26"/>
+        <TextBox x:Name="FunctionBox" Height="23" Margin="30,7.5,5,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="TextChanged"/>
+        <Border BorderBrush="Black" BorderThickness="1" Margin="5,45,5,5" Grid.Row="1" Cursor="None">
+            <Canvas x:Name="GraphCanvas" Margin="0" RenderTransformOrigin="0.5,0.5" Cursor="Hand" MouseDown="GraphCanvas_MouseDown" SizeChanged="GraphCanvas_SizeChanged" Background="#FFE1E1E0" MouseWheel="GraphCanvas_MouseWheel" MouseUp="GraphCanvas_MouseUp" MouseMove="GraphCanvas_MouseMove">
+                <Canvas.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform ScaleY="-1"/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Canvas.RenderTransform>
+            </Canvas>
+        </Border>
 
     </Grid>
 </Window>

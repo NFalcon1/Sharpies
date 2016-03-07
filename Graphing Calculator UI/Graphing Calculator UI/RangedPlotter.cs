@@ -100,26 +100,32 @@ namespace Graphing_Calculator_UI
         public void MoveUp()
         { this.MoveXBy(this.YRange / 3); }
 
-        public void ZoomInY()
+        public void ZoomY(double scale)
         {
             double yMean = (yMin + yMax) / 2;
-            var yRange = this.YRange / 1.5;
+            var yRange = this.YRange * scale;
             yMin = yMean - yRange / 2;
             yMax = yMean + yRange / 2;
         }
 
-        public void ZoomInX()
+        public void ZoomX(double scale)
         {
             double xMean = (xMin + xMax) / 2;
-            var xRange = this.XRange / 1.5;
+            var xRange = this.XRange * scale;
             xMin = xMean - xRange / 2;
             xMax = xMean + xRange / 2;
         }
 
         public void ZoomIn()
         {
-            this.ZoomInX();
-            this.ZoomInY();
+            this.ZoomX(1 / 1.5);
+            this.ZoomY(1 / 1.5);
+        }
+
+        public void ZoomOut()
+        {
+            this.ZoomX(4 / 3.0);
+            this.ZoomY(4 / 3.0);
         }
 
         public string Equation
@@ -132,7 +138,7 @@ namespace Graphing_Calculator_UI
             }
         }
 
-        public List<Point> GetPoints()
+        public List<List<Point>> GetPoints()
         {
             double xMin = this.xMin, yMin = this.yMin, xMax = this.xMax, yMax = this.yMax;
             double xPixel = 2 * (xMax - xMin) / (this.CanvasDimensions.X);
@@ -160,7 +166,8 @@ namespace Graphing_Calculator_UI
             //      We use exit points if y is outside of graph or y is invalid value, e.g. NAN, or infinite.
             //
             // Note that we did not have to use any slope in this alogrithm. Neat Right :)c
-            while (pointNode.Value.X <= xMax)
+            while (pointNode.Value.X <= xMax
+                && pointList.Count < 100000)
             {
                 if (pointNode == pointList.Last)
                 {
@@ -179,7 +186,7 @@ namespace Graphing_Calculator_UI
                 }
 
                 double xDiff = pointNode.Next.Value.X - pointNode.Value.X;
-                if ((IsValid(yDiff) && xDiff > (xPixel / 10))
+                if ((IsValid(yDiff))
                      && ((y1 <= yMax && y1 >= yMin) || (y2 <= yMax && y2 >= yMin)))
                 {
                     x = (pointNode.Value.X + pointNode.Next.Value.X) / 2;
@@ -191,14 +198,65 @@ namespace Graphing_Calculator_UI
                 }
             }
 
-            List<Point> returnValue = new List<Point>();
-            foreach (var item in pointList)
+            if (pointList.Count < 100000)
             {
-                AddPoint(item.X, item.Y, returnValue);
+
+                List<Point> returnValue = new List<Point>();
+                foreach (var item in pointList)
+                {
+                    AddPoint(item.X, item.Y, returnValue);
+                }
+
+                this.points = returnValue;
             }
 
-            this.points = returnValue;
-            return this.points;
+            var point = GetPointSegments(points, 0, CanvasDimensions.Y);
+
+            return point;
+        }
+
+        public static List<List<Point>> GetPointSegments(List<Point> points, double yMin, double yMax)
+        {
+            var rv = new List<List<Point>>();
+            List<Point> currentList = null;
+            for (int itemCheck = 0; itemCheck < points.Count; itemCheck++)
+            {
+                var point = points[itemCheck];
+                if (point.Y >= yMin && point.Y <= yMax)
+                {
+                    if (currentList == null)
+                    {
+                        currentList = new List<Point>();
+                        if (itemCheck > 0)
+                        {
+                            currentList.Add(points[itemCheck - 1]);
+                        }
+
+                        currentList.Add(point);
+                    }
+
+                    if (itemCheck < points.Count - 1)
+                    {
+                        currentList.Add(points[itemCheck + 1]);
+                    }
+                }
+                else
+                {
+                    if (currentList != null)
+                    {
+                        rv.Add(currentList);
+                    }
+
+                    currentList = null;
+                }
+            }
+
+            if (currentList != null)
+            {
+                rv.Add(currentList);
+            }
+
+            return rv;
         }
 
         private bool IsValid(double d)
@@ -226,7 +284,10 @@ namespace Graphing_Calculator_UI
         {
             if (double.IsInfinity(value)
                 || value > maxValue)
-            { return canvasSize; }
+            { return canvasSize + 1; }
+            else if (double.IsNegativeInfinity(value)
+                || value < minValue)
+            { return -1; }
 
             return (value - minValue) * canvasSize / (maxValue - minValue);
         }

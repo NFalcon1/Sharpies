@@ -126,6 +126,9 @@ namespace Calculator
         static string FixExpr(
             string expr)
         {
+            if (string.IsNullOrWhiteSpace(expr))
+            { return string.Empty; }
+
             StringBuilder sb = new StringBuilder();
             for (int check = 0; check < expr.Length - 1; check++)
             {

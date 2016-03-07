@@ -49,7 +49,7 @@ namespace Graphing_Calculator_UI
             return 100;
         }
 
-        static public void AddPolyLine(Canvas canvas, Point[] points)
+        static public void AddPolyLine(Canvas canvas, List<Point> points)
         {
             // Create a red Brush
             SolidColorBrush redBrush = new SolidColorBrush();
@@ -60,24 +60,8 @@ namespace Graphing_Calculator_UI
             polyLine.StrokeThickness = 1;
             polyLine.Stroke = redBrush;
             polyLine.Points = collection;
-            canvas.Children.Add(polyLine);
-        }
 
-        static public void AddPoint(Canvas canvas, Point p1)
-        {
-            Ellipse myEllipse = new Ellipse();
-            SolidColorBrush mySolidColorBrush = new SolidColorBrush();
-            mySolidColorBrush.Color = Colors.Red;
-            myEllipse.Fill = mySolidColorBrush;
-            myEllipse.StrokeThickness = 2;
-            myEllipse.Stroke = Brushes.Red;
-            myEllipse.Width = 3;
-            myEllipse.Height = 3;
-            Canvas.SetTop(myEllipse, p1.Y);
-            Canvas.SetLeft(myEllipse, p1.X);
-            canvas.Children.Add(myEllipse);
-            // Add line to the Grid.
-            // canvas.Children.Add(line);
+            canvas.Children.Add(polyLine);
         }
 
         static public void AddLine(Canvas canvas, Point p1, Point p2)
@@ -101,6 +85,7 @@ namespace Graphing_Calculator_UI
             // Add line to the Grid.
             canvas.Children.Add(line);
         }
+
         static public void AddCoordLine(Canvas canvas, double x1, double y1, double x2, double y2)
         {
             // Create a Line
